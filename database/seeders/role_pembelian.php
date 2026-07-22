@@ -21,7 +21,7 @@ class role_pembelian extends Seeder
                 'firstname' => 'Staff',
                 'lastname' => 'Pembelian',
                 'email' => 'pembelian@local.test',
-                'password' => Hash::make('Pembelian123!'),
+                'password' => Hash::make('pembelian'),
                 'idroles' => 'pembel',
                 'isactive' => '1',
             ]
