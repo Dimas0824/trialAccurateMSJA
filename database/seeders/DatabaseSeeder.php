@@ -560,6 +560,7 @@ class DatabaseSeeder extends Seeder
             role_pembelian::class,
             menu_master_pemasok::class,
             tabel_mskategori_pemasok::class,
+            menu_master_barang_jasa::class,
         ]);
     }
 }
