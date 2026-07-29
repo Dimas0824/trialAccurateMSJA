@@ -105,15 +105,18 @@
                                 @endforeach
                             </select></div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" name="kena_pajak"
-                                value="1" @checked(old('kena_pajak', $order?->kena_pajak))><label class="form-check-label">Kena
-                                Pajak</label></div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-check"><input class="form-check-input" type="checkbox"
-                                name="total_termasuk_pajak" value="1" @checked(old('total_termasuk_pajak', $order?->total_termasuk_pajak))><label
-                                class="form-check-label">Harga Termasuk Pajak</label></div>
+                    <div class="col-md-8">
+                        <div class="form-group mb-0">
+                            <label class="form-control-label">Opsi Pajak</label>
+                            <div class="border rounded px-3 py-2 d-flex flex-wrap gap-4">
+                                <div class="form-check mb-0"><input class="form-check-input" type="checkbox"
+                                        name="kena_pajak" value="1" @checked(old('kena_pajak', $order?->kena_pajak))><label
+                                        class="form-check-label">Kena Pajak</label></div>
+                                <div class="form-check mb-0"><input class="form-check-input" type="checkbox"
+                                        name="total_termasuk_pajak" value="1" @checked(old('total_termasuk_pajak', $order?->total_termasuk_pajak))><label
+                                        class="form-check-label">Harga Termasuk Pajak</label></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group"><label class="form-control-label">Keterangan</label>
@@ -161,7 +164,7 @@
         function options(rows, selected, label) {
             return '<option value=""></option>' + rows.map(row =>
                 `<option value="${row.id}" ${String(row.id) === String(selected ?? '') ? 'selected' : ''}>${label(row)}</option>`
-                ).join('');
+            ).join('');
         }
 
         function addItem(item = {}) {
@@ -174,7 +177,7 @@
                     row.nama_barang
                 }
                 `)}</select></td><td><input class="form-control" type="number" min="0.0001" step="0.0001" name="items[${index}][kuantitas]" required value="${item.kuantitas ?? 1}"></td><td><input class="form-control" type="number" min="0" step="0.01" name="items[${index}][harga_satuan]" required value="${item.harga_satuan ?? 0}"></td><td><input class="form-control" type="number" min="0" max="100" step="0.0001" name="items[${index}][diskon_persen]" value="${item.diskon_persen ?? 0}"></td><td><select class="form-select" name="items[${index}][pajak_id]">${options(taxes, item.pajak_id, row => `${row.kode} - ${row.nama}`)}</select></td><td><input class="form-control" name="items[${index}][keterangan]" value="${item.keterangan ?? ''}"></td><td><button type="button" class="btn btn-danger btn-sm mb-0 remove-item"><i class="fas fa-times"></i></button></td></tr>`
-                );
+            );
         }
         // Sisakan satu baris agar pesanan selalu memiliki rincian untuk diisi.
         $(function() {

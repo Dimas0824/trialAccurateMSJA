@@ -31,6 +31,21 @@ class TrumpController extends Controller
         return view('rencan.trump.edit', $this->formData($data, $advance));
     }
 
+    public function show(array $data)
+    {
+        // Ambil dokumen dan referensinya untuk tampilan histori uang muka.
+        $data['advance'] = DB::table('uang_muka_pembelian as um')
+            ->join('pemasok as p', 'p.id', '=', 'um.pemasok_id')
+            ->leftJoin('pesanan_pembelian as po', 'po.id', '=', 'um.pesanan_pembelian_id')
+            ->leftJoin('mata_uang as m', 'm.id', '=', 'um.mata_uang_id')
+            ->leftJoin('syarat_pembayaran as sp', 'sp.id', '=', 'um.syarat_pembayaran_id')
+            ->leftJoin('rekening_bank_pemasok as rb', 'rb.id', '=', 'um.rekening_bank_pemasok_id')
+            ->select('um.*', 'p.nama as pemasok', 'po.nomor as nomor_pesanan', 'm.kode as mata_uang', 'sp.nama as syarat_pembayaran', 'rb.nama_bank as bank_pemasok')
+            ->where('um.id', decrypt($data['idencrypt']))->first() ?? abort(404);
+
+        return view('rencan.trump.show', $data);
+    }
+
     public function store(array $data)
     {
         // Simpan uang muka secara atomik.

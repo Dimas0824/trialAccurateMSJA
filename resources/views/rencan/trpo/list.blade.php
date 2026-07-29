@@ -46,7 +46,7 @@
                                                 <td class="text-sm font-weight-normal">
                                                     <div class="btn-group"><button class="btn btn-primary btn-sm mb-0 px-3"
                                                             type="button"
-                                                            onclick="window.location='{{ url($url_menu . '/edit/' . encrypt($order->id)) }}'"><i
+                                                            onclick="window.location='{{ url($url_menu . '/show/' . encrypt($order->id)) }}'"><i
                                                                 class="fas fa-eye"></i><span class="font-weight-bold">
                                                                 View</span></button><button type="button"
                                                             class="btn btn-sm btn-primary mb-0 px-3 dropdown-toggle dropdown-toggle-split"

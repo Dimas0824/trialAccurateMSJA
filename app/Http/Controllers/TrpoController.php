@@ -31,6 +31,24 @@ class TrpoController extends Controller
         return view('rencan.trpo.edit', $this->formData($data, $order));
     }
 
+    public function show(array $data)
+    {
+        // Detail memakai snapshot transaksi agar histori dokumen tidak berubah.
+        $data['order'] = DB::table('pesanan_pembelian as po')
+            ->join('pemasok as p', 'p.id', '=', 'po.pemasok_id')
+            ->leftJoin('mata_uang as m', 'm.id', '=', 'po.mata_uang_id')
+            ->leftJoin('syarat_pembayaran as sp', 'sp.id', '=', 'po.syarat_pembayaran_id')
+            ->leftJoin('rekening_bank_pemasok as rb', 'rb.id', '=', 'po.rekening_bank_pemasok_id')
+            ->select('po.*', 'p.nama as pemasok', 'm.kode as mata_uang', 'sp.nama as syarat_pembayaran', 'rb.nama_bank as bank_pemasok')
+            ->where('po.id', decrypt($data['idencrypt']))->first() ?? abort(404);
+        $data['items'] = DB::table('rincian_pesanan_pembelian as ri')
+            ->leftJoin('pajak as p', 'p.id', '=', 'ri.pajak_id')
+            ->select('ri.*', 'p.kode as kode_pajak', 'p.nama as nama_pajak')
+            ->where('ri.pesanan_pembelian_id', $data['order']->id)->get();
+
+        return view('rencan.trpo.show', $data);
+    }
+
     public function store(array $data)
     {
         // todo: add data validation
