@@ -8,6 +8,13 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // MySQL dapat menyisakan tabel saat pembuatan index gagal; retry cukup melengkapi index.
+        if (Schema::hasTable('alokasi_pembayaran_faktur')) {
+            Schema::table('alokasi_pembayaran_faktur', fn (Blueprint $table) => $table->unique(['pembayaran_pembelian_id', 'faktur_pembelian_id'], 'uq_bayar_faktur'));
+
+            return;
+        }
+
         Schema::create('alokasi_pembayaran_faktur', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pembayaran_pembelian_id')->constrained('pembayaran_pembelian')->cascadeOnDelete();
@@ -17,7 +24,7 @@ return new class extends Migration
             $table->decimal('jumlah_bayar', 18, 2);
             $table->decimal('jumlah_diskon', 18, 2)->default(0);
             $table->decimal('jumlah_dialokasikan', 18, 2);
-            $table->unique(['pembayaran_pembelian_id', 'faktur_pembelian_id']);
+            $table->unique(['pembayaran_pembelian_id', 'faktur_pembelian_id'], 'uq_bayar_faktur');
         });
     }
 

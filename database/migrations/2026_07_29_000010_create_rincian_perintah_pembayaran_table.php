@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('jumlah_bayar', 18, 2);
             $table->decimal('jumlah_diskon', 18, 2)->default(0);
             $table->decimal('jumlah_dialokasikan', 18, 2);
-            $table->unique(['perintah_pembayaran_id', 'faktur_pembelian_id']);
+            $table->unique(['perintah_pembayaran_id', 'faktur_pembelian_id'], 'uq_perintah_faktur');
         });
     }
 
