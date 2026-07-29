@@ -33,6 +33,8 @@ class TrpoController extends Controller
 
     public function store(array $data)
     {
+        // todo: add data validation
+
         // Simpan header dan seluruh rincian sebagai satu transaksi.
         DB::transaction(fn () => $this->saveOrder());
 
@@ -75,7 +77,8 @@ class TrpoController extends Controller
         $data['addresses'] = DB::table('alamat_perusahaan')->where('isactive', '1')->orderBy('nama')->get();
         $data['shippingMethods'] = DB::table('metode_pengiriman')->where('isactive', '1')->orderBy('nama')->get();
         $data['fobs'] = DB::table('ketentuan_fob')->where('isactive', '1')->orderBy('nama')->get();
-        $data['goods'] = DB::table('barang_jasa')->where('isactive', '1')->orderBy('nama')->get();
+        // Master barang memakai nama_barang setelah migrasi rebuild.
+        $data['goods'] = DB::table('barang_jasa')->where('isactive', '1')->orderBy('nama_barang')->get();
         $data['taxes'] = DB::table('pajak')->where('isactive', '1')->orderBy('nama')->get()->keyBy('id');
 
         return $data;

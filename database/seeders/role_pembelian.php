@@ -26,5 +26,11 @@ class role_pembelian extends Seeder
                 'isactive' => '1',
             ]
         );
+
+        // Daftarkan menu dan authorize setelah role tersedia untuk foreign key sys_auth.
+        $this->call([
+            menu_master_pemasok::class,
+            menu_perencanaan_pembelian::class,
+        ]);
     }
 }

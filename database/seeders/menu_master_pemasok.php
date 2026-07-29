@@ -9,8 +9,7 @@ class menu_master_pemasok extends Seeder
 {
     public function run(): void
     {
-        DB::table('sys_auth')->where('idroles', 'admins')->whereIn('dmenu', ['mskatp', 'mspems'])->delete();
-
+        // Seeder memakai updateOrInsert agar hak akses lain tidak terhapus saat dijalankan ulang.
         DB::table('sys_gmenu')->updateOrInsert(
             ['gmenu' => 'master'],
             ['urut' => 2, 'name' => 'Master', 'icon' => 'ni-collection', 'isactive' => '1']

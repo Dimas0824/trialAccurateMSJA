@@ -1,8 +1,8 @@
-{{-- Form manual mempertahankan kelas tampilan bawaan framework. --}}
+{{-- Field disusun satu kolom agar urut dari kiri ke bawah. --}}
 <div class="container-fluid"><div class="row"><div class="col-md-12"><div class="row mx-1"><div class="card">
     <div class="card-header"><h5 class="mb-0">{{ $advance ? 'Edit' : 'Tambah' }} {{ $title_menu }}</h5></div><hr class="horizontal dark mt-0">
     <form action="{{ $action }}" method="POST"><div class="card-body">@csrf @if ($method !== 'POST') @method($method) @endif
-        <div class="row">
+        <div class="row form-satu-kolom">
             <div class="col-md-4"><div class="form-group"><label class="form-control-label">Nomor Form</label><input class="form-control" name="nomor_form" maxlength="50" required value="{{ old('nomor_form', $advance?->nomor_form) }}">@error('nomor_form')<p class="text-danger text-xs pt-1">{{ $message }}</p>@enderror</div></div>
             <div class="col-md-4"><div class="form-group"><label class="form-control-label">Tanggal</label><input class="form-control" type="date" name="tanggal" required value="{{ old('tanggal', $advance?->tanggal ?? now()->toDateString()) }}"></div></div>
             <div class="col-md-4"><div class="form-group"><label class="form-control-label">Nomor Faktur Pemasok</label><input class="form-control" name="nomor_faktur_pemasok" maxlength="50" required value="{{ old('nomor_faktur_pemasok', $advance?->nomor_faktur_pemasok) }}"></div></div>
