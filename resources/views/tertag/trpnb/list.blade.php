@@ -1,0 +1,5 @@
+@extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
+@section('content')
+    @include('layouts.navbars.auth.topnav', ['title' => ''])
+    <div class="container-fluid"><div class="card"><div class="card-header d-flex justify-content-between"><h5 class="mb-0">List {{ $title_menu }}</h5>@if ($authorize->add == '1')<a class="btn btn-primary btn-sm mb-0" href="{{ url($url_menu . '/add') }}">Tambah</a>@endif</div><div class="card-body table-responsive"><table class="table display" id="list_{{ $dmenu }}"><thead class="thead-light"><tr><th>Action</th><th>No Form</th><th>Tanggal</th><th>Pemasok</th><th>Status</th></tr></thead><tbody>@foreach ($receipts as $receipt)<tr><td><a class="btn btn-primary btn-sm mb-0" href="{{ url($url_menu . '/show/' . encrypt($receipt->id)) }}">View</a></td><td>{{ $receipt->nomor_form }}</td><td>{{ $receipt->tanggal_penerimaan }}</td><td>{{ $receipt->pemasok }}</td><td>{{ ucfirst($receipt->status) }}</td></tr>@endforeach</tbody></table></div></div></div>
+@endsection

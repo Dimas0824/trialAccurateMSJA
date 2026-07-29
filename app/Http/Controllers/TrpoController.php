@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
+// controller untuk transaksi pesanan pembelian (TRPO)
+// yang mengelola daftar, tambah, ubah, hapus, dan detail pesanan pembelian.
 class TrpoController extends Controller
 {
     public function index(array $data)

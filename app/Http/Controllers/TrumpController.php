@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
+// controller untuk transaksi uang muka pembelian (TRUMP)
+// yang mengelola daftar, tambah, ubah, hapus, dan detail uang muka pembelian.
 class TrumpController extends Controller
 {
     public function index(array $data)
