@@ -1,11 +1,27 @@
 {{-- Grid tiga kolom menjaga setiap baris form sejajar dan mudah dipindai. --}}
-<div class="container-fluid py-3">
+<style>
+    .trpo-form-shell .card { border: 1px solid #dbe4ee; box-shadow: 0 .35rem 1rem rgba(15, 23, 42, .08); }
+    .trpo-form-shell .card-header { border-bottom: 1px solid #dbe4ee; padding: 1.15rem 1.35rem; }
+    .trpo-form-shell .trpo-action-bar { background: #f8fafc; }
+    .trpo-form-shell .form-control-label { color: #172b4d; font-weight: 700; margin-bottom: .45rem; }
+    .trpo-form-shell .form-control, .trpo-form-shell .form-select { border-color: #cbd5e1; min-height: 2.75rem; }
+    .trpo-form-shell .form-control:focus, .trpo-form-shell .form-select:focus { border-color: #00a6ad; box-shadow: 0 0 0 .18rem rgba(0, 166, 173, .14); }
+    .trpo-form-shell .form-check { color: #344767; }
+    .trpo-form-shell .trpo-tax-options { background: #f8fafc; border-color: #cbd5e1 !important; }
+    .trpo-form-shell .trpo-detail-heading { border-bottom: 2px solid #00a6ad; padding-bottom: .65rem; }
+    .trpo-form-shell .trpo-detail-table { border-color: #b8dfe2 !important; }
+    .trpo-form-shell .trpo-detail-table thead { background: #00b7bd4f; color: #172b4d; }
+    .trpo-form-shell .trpo-detail-table th { border-bottom: 2px solid #77cfd4; font-size: .75rem; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; }
+    .trpo-form-shell .trpo-detail-table td { border-color: #e2e8f0; vertical-align: middle; }
+</style>
+<div class="container-fluid py-3 trpo-form-shell">
     <div class="card">
         <div class="card-header">
             <h5 class="mb-0">{{ $order ? 'Edit' : 'Tambah' }} {{ $title_menu }}</h5>
         </div>
         <hr class="horizontal dark mt-0">
-        <form action="{{ $action }}" method="POST">
+        <div class="card-body p-3 border-bottom trpo-action-bar"><div class="nav-wrapper"><a class="btn btn-secondary mb-0" href="{{ url($url_menu) }}"><i class="fas fa-circle-left me-1"></i><span class="font-weight-bold">Kembali</span></a><button class="btn btn-primary mb-0" form="trpo-form" type="submit"><i class="fas fa-floppy-disk me-1"></i><span class="font-weight-bold">Simpan</span></button></div></div>
+        <form action="{{ $action }}" id="trpo-form" class="trpo-order-form" method="POST">
             <div class="card-body">@csrf @if ($method !== 'POST')
                     @method($method)
                 @endif
@@ -108,7 +124,7 @@
                     <div class="col-md-8">
                         <div class="form-group mb-0">
                             <label class="form-control-label">Opsi Pajak</label>
-                            <div class="border rounded px-3 py-2 d-flex flex-wrap gap-4">
+                            <div class="border rounded px-3 py-2 d-flex flex-wrap gap-4 trpo-tax-options">
                                 <div class="form-check mb-0"><input class="form-check-input" type="checkbox"
                                         name="kena_pajak" value="1" @checked(old('kena_pajak', $order?->kena_pajak))><label
                                         class="form-check-label">Kena Pajak</label></div>
@@ -125,14 +141,14 @@
                     </div>
                 </div>
                 <hr class="horizontal dark">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center trpo-detail-heading">
                     <h6 class="mb-0">Rincian Barang/Jasa</h6><button type="button"
                         class="btn btn-secondary btn-sm mb-0" id="add-item"><i class="fas fa-plus me-1"></i>Tambah
                         Baris</button>
                 </div>
-                <div class="table-responsive mt-3">
-                    <table class="table">
-                        <thead class="thead-light" style="background-color: #00b7bd4f;">
+                <div class="table-responsive mt-3 border rounded overflow-hidden trpo-detail-table">
+                    <table class="table mb-0">
+                        <thead>
                             <tr>
                                 <th>Barang/Jasa</th>
                                 <th width="110">Kuantitas</th>
@@ -147,9 +163,6 @@
                     </table>
                 </div>
             </div>
-            <div class="card-footer"><button class="btn btn-primary mb-0" type="submit"><i
-                        class="fas fa-save me-1"></i>Simpan</button><button class="btn btn-secondary mb-0"
-                    type="button" onclick="window.location='{{ url($url_menu) }}'">Kembali</button></div>
         </form>
     </div>
 </div>
