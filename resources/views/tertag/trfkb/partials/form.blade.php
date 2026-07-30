@@ -1,0 +1,75 @@
+<div class="container-fluid py-3">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">{{ $invoice ? 'Edit' : 'Tambah' }} {{ $title_menu }}</h5>
+        </div>
+        <div class="card-body p-3 border-bottom"><div class="nav-wrapper"><a class="btn btn-secondary mb-0" href="{{ url($url_menu) }}"><i class="fas fa-circle-left me-1"></i><span class="font-weight-bold">Kembali</span></a><button class="btn btn-primary mb-0" form="trfkb-form" type="submit"><i class="fas fa-floppy-disk me-1"></i><span class="font-weight-bold">Simpan</span></button></div></div>
+        <form action="{{ $action }}" id="trfkb-form" method="POST">
+            <div class="card-body">@csrf @if ($method !== 'POST')
+                    @method($method)
+                @endif
+                <div class="row g-3">
+                    <div class="col-md-4"><label>No Form</label><input class="form-control" name="nomor_form" required
+                            value="{{ old('nomor_form', $invoice?->nomor_form) }}"></div>
+                    <div class="col-md-4"><label>No Faktur</label><input class="form-control"
+                            name="nomor_faktur_pemasok" required
+                            value="{{ old('nomor_faktur_pemasok', $invoice?->nomor_faktur_pemasok) }}"></div>
+                    <div class="col-md-4"><label>Tanggal</label><input class="form-control" type="date"
+                            name="tanggal_faktur" required
+                            value="{{ old('tanggal_faktur', $invoice?->tanggal_faktur?->format('Y-m-d') ?? now()->toDateString()) }}">
+                    </div>
+                    <div class="col-md-12"><label>Pemasok</label><select class="form-select" name="pemasok_id" required>
+                            <option></option>
+                            @foreach ($suppliers as $supplier)
+                                <option value="{{ $supplier->id }}" @selected(old('pemasok_id', $invoice?->pemasok_id) == $supplier->id)>{{ $supplier->nama }}
+                                </option>
+                            @endforeach
+                        </select></div>
+                    <div class="col-md-12"><label>Keterangan</label>
+                        <textarea class="form-control" name="keterangan">{{ old('keterangan', $invoice?->keterangan) }}</textarea>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <h6>Barang</h6><button class="btn btn-secondary btn-sm" type="button" id="add-item">Tambah
+                        Baris</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Barang</th>
+                                <th>Qty</th>
+                                <th>Harga</th>
+                                <th>Diskon</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="items"></tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@push('js')
+    <script>
+        const goods = @json($goods),
+            items = @json(old('items', $items));
+        let n = 0;
+
+        function row(i = {}) {
+            let k = n++;
+            $('#items').append(
+                `<tr><td><select class="form-select" name="items[${k}][barang_jasa_kode]" required><option></option>${goods.map(x=>`<option value="${x.kode_barang}" ${x.kode_barang===i.barang_jasa_kode?'selected':''}>${x.kode_barang} - ${x.nama_barang}</option>`).join('')}</select></td><td><input class="form-control" type="number" min="0.0001" step="0.0001" name="items[${k}][kuantitas]" value="${i.kuantitas??1}" required></td><td><input class="form-control" type="number" min="0" step="0.01" name="items[${k}][harga_satuan]" value="${i.harga_satuan??0}" required></td><td><input class="form-control" type="number" min="0" step="0.01" name="items[${k}][jumlah_diskon]" value="${i.jumlah_diskon??0}"></td><td><button type="button" class="btn btn-danger btn-sm remove" aria-label="Hapus baris"><i class="fas fa-trash"></i></button></td></tr>`
+            )
+        }
+        $(function() {
+            (items.length ? items : [{}]).forEach(row);
+            $('#add-item').click(() => row());
+            $('#items').on('click', '.remove', function() {
+                $(this).closest('tr').remove()
+            })
+        })
+    </script>
+@endpush
