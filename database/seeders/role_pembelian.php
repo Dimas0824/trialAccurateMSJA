@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class role_pembelian extends Seeder
 {
@@ -31,6 +31,7 @@ class role_pembelian extends Seeder
         $this->call([
             menu_master_pemasok::class,
             menu_perencanaan_pembelian::class,
+            menu_pembelian_lanjutan::class,
         ]);
     }
 }
