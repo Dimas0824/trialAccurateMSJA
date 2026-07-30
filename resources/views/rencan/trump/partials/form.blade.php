@@ -8,7 +8,8 @@
                         <h5 class="mb-0">{{ $advance ? 'Edit' : 'Tambah' }} {{ $title_menu }}</h5>
                     </div>
                     <hr class="horizontal dark mt-0">
-                    <form action="{{ $action }}" method="POST">
+                    <div class="card-body p-3 border-bottom"><div class="nav-wrapper"><a class="btn btn-secondary mb-0" href="{{ url($url_menu) }}"><i class="fas fa-circle-left me-1"></i><span class="font-weight-bold">Kembali</span></a><button class="btn btn-primary mb-0" form="trump-form" type="submit"><i class="fas fa-floppy-disk me-1"></i><span class="font-weight-bold">Simpan</span></button></div></div>
+                    <form action="{{ $action }}" id="trump-form" method="POST">
                         <div class="card-body">@csrf @if ($method !== 'POST')
                                 @method($method)
                             @endif
@@ -123,10 +124,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-footer"><button class="btn btn-primary mb-0" type="submit"><i
-                                    class="fas fa-save me-1"></i>Simpan</button><button class="btn btn-secondary mb-0"
-                                type="button" onclick="window.location='{{ url($url_menu) }}'">Kembali</button>
                         </div>
                     </form>
                 </div>
