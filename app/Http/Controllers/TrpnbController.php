@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PenerimaanBarang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
@@ -11,10 +12,10 @@ class TrpnbController extends Controller
 {
     public function index(array $data)
     {
-        $data['receipts'] = DB::table('penerimaan_barang as pb')
-            ->join('pemasok as p', 'p.id', '=', 'pb.pemasok_id')
-            ->select('pb.*', 'p.nama as pemasok')
-            ->latest('pb.tanggal_penerimaan')->get();
+        $data['receipts'] = PenerimaanBarang::query()
+            ->join('pemasok as p', 'p.id', '=', 'penerimaan_barang.pemasok_id')
+            ->select('penerimaan_barang.*', 'p.nama as pemasok')
+            ->latest('penerimaan_barang.tanggal_penerimaan')->get();
 
         return view('tertag.trpnb.list', $data);
     }
@@ -35,7 +36,7 @@ class TrpnbController extends Controller
     public function show(array $data)
     {
         $data['receipt'] = $this->receipt(decrypt($data['idencrypt']));
-        $data['items'] = DB::table('rincian_penerimaan_barang')->where('penerimaan_barang_id', $data['receipt']->id)->get();
+        $data['items'] = $data['receipt']->items;
 
         return view('tertag.trpnb.show', $data);
     }
@@ -60,15 +61,15 @@ class TrpnbController extends Controller
     {
         $receipt = $this->receipt(decrypt($data['idencrypt']));
         abort_unless($receipt->status === 'draf', 422, 'Hanya penerimaan berstatus draf yang dapat dibatalkan.');
-        DB::table('penerimaan_barang')->where('id', $receipt->id)->update(['status' => 'dibatalkan', 'user_update' => session('username')]);
+        $receipt->update(['status' => 'dibatalkan', 'user_update' => session('username')]);
 
         return redirect('trpnb')->with(['message' => 'Penerimaan barang dibatalkan.', 'class' => 'success']);
     }
 
-    private function formData(array $data, ?object $receipt = null): array
+    private function formData(array $data, ?PenerimaanBarang $receipt = null): array
     {
         $data['receipt'] = $receipt;
-        $data['items'] = $receipt ? DB::table('rincian_penerimaan_barang')->where('penerimaan_barang_id', $receipt->id)->get() : [];
+        $data['items'] = $receipt?->items ?? collect();
         $data['suppliers'] = DB::table('pemasok')->where('isactive', '1')->orderBy('nama')->get();
         $data['goods'] = DB::table('barang_jasa')->where('isactive', '1')->orderBy('nama_barang')->get(['kode_barang', 'nama_barang', 'satuan']);
         $data['orderLines'] = DB::table('rincian_pesanan_pembelian')->get(['id', 'barang_jasa_kode']);
@@ -76,10 +77,10 @@ class TrpnbController extends Controller
         return $data;
     }
 
-    private function receipt(int $id): object
+    private function receipt(int $id): PenerimaanBarang
     {
-        return DB::table('penerimaan_barang as pb')->join('pemasok as p', 'p.id', '=', 'pb.pemasok_id')
-            ->select('pb.*', 'p.nama as pemasok')->where('pb.id', $id)->first() ?? abort(404);
+        return PenerimaanBarang::query()->join('pemasok as p', 'p.id', '=', 'penerimaan_barang.pemasok_id')
+            ->select('penerimaan_barang.*', 'p.nama as pemasok')->findOrFail($id);
     }
 
     private function save(?int $id = null): void
@@ -96,16 +97,16 @@ class TrpnbController extends Controller
             'items.*.rincian_pesanan_pembelian_id' => ['nullable', 'exists:rincian_pesanan_pembelian,id'],
         ]);
         $payload = collect($input)->except('items')->all() + ['user_update' => session('username')];
-        $receiptId = $id ?? DB::table('penerimaan_barang')->insertGetId($payload + ['user_create' => session('username')]);
+        $receipt = $id ? PenerimaanBarang::findOrFail($id) : PenerimaanBarang::create($payload + ['user_create' => session('username')]);
         if ($id) {
-            DB::table('penerimaan_barang')->where('id', $id)->update($payload);
-            DB::table('rincian_penerimaan_barang')->where('penerimaan_barang_id', $id)->delete();
+            $receipt->update($payload);
+            $receipt->items()->delete();
         }
         $goods = DB::table('barang_jasa')->whereIn('kode_barang', collect($input['items'])->pluck('barang_jasa_kode'))->get()->keyBy('kode_barang');
-        DB::table('rincian_penerimaan_barang')->insert(collect($input['items'])->map(function (array $item) use ($goods, $receiptId) {
+        $receipt->items()->createMany(collect($input['items'])->map(function (array $item) use ($goods) {
             $goodsRow = $goods[$item['barang_jasa_kode']];
 
-            return ['penerimaan_barang_id' => $receiptId, 'barang_jasa_kode' => $goodsRow->kode_barang, 'rincian_pesanan_pembelian_id' => $item['rincian_pesanan_pembelian_id'] ?: null, 'nama_barang_snapshot' => $goodsRow->nama_barang, 'satuan_snapshot' => $goodsRow->satuan, 'kuantitas' => $item['kuantitas']];
+            return ['barang_jasa_kode' => $goodsRow->kode_barang, 'rincian_pesanan_pembelian_id' => $item['rincian_pesanan_pembelian_id'] ?: null, 'nama_barang_snapshot' => $goodsRow->nama_barang, 'satuan_snapshot' => $goodsRow->satuan, 'kuantitas' => $item['kuantitas']];
         })->all());
     }
 }

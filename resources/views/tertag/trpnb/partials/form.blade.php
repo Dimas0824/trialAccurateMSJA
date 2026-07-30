@@ -3,7 +3,8 @@
         <div class="card-header">
             <h5 class="mb-0">{{ $receipt ? 'Edit' : 'Tambah' }} {{ $title_menu }}</h5>
         </div>
-        <form action="{{ $action }}" method="POST">
+        <div class="card-body p-3 border-bottom"><div class="nav-wrapper"><a class="btn btn-secondary mb-0" href="{{ url($url_menu) }}"><i class="fas fa-circle-left me-1"></i><span class="font-weight-bold">Kembali</span></a><button class="btn btn-primary mb-0" form="trpnb-form" type="submit"><i class="fas fa-floppy-disk me-1"></i><span class="font-weight-bold">Simpan</span></button></div></div>
+        <form action="{{ $action }}" id="trpnb-form" method="POST">
             <div class="card-body">@csrf @if ($method !== 'POST')
                     @method($method)
                 @endif
@@ -44,8 +45,6 @@
                     </table>
                 </div>
             </div>
-            <div class="card-footer"><button class="btn btn-primary mb-0">Simpan</button><a
-                    class="btn btn-secondary mb-0" href="{{ url($url_menu) }}">Kembali</a></div>
         </form>
     </div>
 </div>
@@ -59,7 +58,7 @@
         function row(i = {}) {
             let k = n++;
             $('#items').append(
-                `<tr><td><select class="form-select" name="items[${k}][barang_jasa_kode]" required><option></option>${goods.map(x=>`<option value="${x.kode_barang}" ${x.kode_barang===i.barang_jasa_kode?'selected':''}>${x.kode_barang} - ${x.nama_barang}</option>`).join('')}</select></td><td><input class="form-control" type="number" min="0.0001" step="0.0001" name="items[${k}][kuantitas]" value="${i.kuantitas??1}" required></td><td><select class="form-select" name="items[${k}][rincian_pesanan_pembelian_id]"><option></option>${lines.map(x=>`<option value="${x.id}" ${String(x.id)===String(i.rincian_pesanan_pembelian_id)?'selected':''}>#${x.id} - ${x.barang_jasa_kode}</option>`).join('')}</select></td><td><button type="button" class="btn btn-danger btn-sm remove">×</button></td></tr>`
+                `<tr><td><select class="form-select" name="items[${k}][barang_jasa_kode]" required><option></option>${goods.map(x=>`<option value="${x.kode_barang}" ${x.kode_barang===i.barang_jasa_kode?'selected':''}>${x.kode_barang} - ${x.nama_barang}</option>`).join('')}</select></td><td><input class="form-control" type="number" min="0.0001" step="0.0001" name="items[${k}][kuantitas]" value="${i.kuantitas??1}" required></td><td><select class="form-select" name="items[${k}][rincian_pesanan_pembelian_id]"><option></option>${lines.map(x=>`<option value="${x.id}" ${String(x.id)===String(i.rincian_pesanan_pembelian_id)?'selected':''}>#${x.id} - ${x.barang_jasa_kode}</option>`).join('')}</select></td><td><button type="button" class="btn btn-danger btn-sm remove" aria-label="Hapus baris"><i class="fas fa-trash"></i></button></td></tr>`
                 )
         }
         $(function() {
