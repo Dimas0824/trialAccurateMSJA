@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Prophecy\Call\Call;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,56 +14,56 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //insert tabel sys_roles
+        // insert tabel sys_roles
         DB::table('sys_roles')->insert([
             'idroles' => 'admins',
             'name' => 'Admin',
-            'description' => 'Administrator'
+            'description' => 'Administrator',
         ]);
 
-        //insert tabel users
+        // insert tabel users
         DB::table('users')->insert([
             'username' => 'msjit',
             'firstname' => 'Admin',
             'lastname' => 'MIS',
             'email' => 'msjit@spunindo.com',
             'password' => bcrypt('mis'),
-            'idroles' => 'admins'
+            'idroles' => 'admins',
         ]);
 
-        //insert tabel sys_gmenu
+        // insert tabel sys_gmenu
         DB::table('sys_gmenu')->insert([
             'gmenu' => 'blankx',
             'urut' => 1,
             'name' => '-',
-            'icon' => '-'
+            'icon' => '-',
         ]);
         DB::table('sys_gmenu')->insert([
             'gmenu' => 'master',
             'urut' => 2,
             'name' => 'Master',
-            'icon' => 'ni-collection'
+            'icon' => 'ni-collection',
         ]);
         DB::table('sys_gmenu')->insert([
             'gmenu' => 'transc',
             'urut' => 3,
             'name' => 'Transactions',
-            'icon' => 'ni-collection'
+            'icon' => 'ni-collection',
         ]);
         DB::table('sys_gmenu')->insert([
             'gmenu' => 'report',
             'urut' => 4,
             'name' => 'Report',
-            'icon' => 'ni-single-copy-04'
+            'icon' => 'ni-single-copy-04',
         ]);
         DB::table('sys_gmenu')->insert([
             'gmenu' => 'system',
             'urut' => 5,
             'name' => 'System',
-            'icon' => 'ni-mobile-button'
+            'icon' => 'ni-mobile-button',
         ]);
 
-        //insert tabel sys_dmenu
+        // insert tabel sys_dmenu
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'blankx',
             'dmenu' => 'dashbr',
@@ -73,7 +72,7 @@ class DatabaseSeeder extends Seeder
             'url' => 'dashboard',
             'icon' => 'ni-tv-2',
             'tabel' => '-',
-            'layout' => 'manual'
+            'layout' => 'manual',
         ]);
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'system',
@@ -83,7 +82,7 @@ class DatabaseSeeder extends Seeder
             'url' => 'sysgmenu',
             'icon' => 'ni-collection',
             'tabel' => 'sys_gmenu',
-            'layout' => 'standr'
+            'layout' => 'standr',
         ]);
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'system',
@@ -93,7 +92,7 @@ class DatabaseSeeder extends Seeder
             'url' => 'sysdmenu',
             'icon' => 'ni-collection',
             'tabel' => 'sys_dmenu',
-            'layout' => 'master'
+            'layout' => 'master',
         ]);
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'system',
@@ -103,7 +102,7 @@ class DatabaseSeeder extends Seeder
             'url' => 'sysroles',
             'icon' => 'ni-collection',
             'tabel' => 'sys_roles',
-            'layout' => 'standr'
+            'layout' => 'standr',
         ]);
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'system',
@@ -113,7 +112,7 @@ class DatabaseSeeder extends Seeder
             'url' => 'sysauth',
             'icon' => 'ni-single-copy-04',
             'tabel' => 'sys_auth',
-            'layout' => 'system'
+            'layout' => 'system',
         ]);
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'system',
@@ -123,7 +122,7 @@ class DatabaseSeeder extends Seeder
             'url' => 'systbl',
             'icon' => 'ni-single-copy-04',
             'tabel' => 'sys_table',
-            'layout' => 'system'
+            'layout' => 'system',
         ]);
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'system',
@@ -133,7 +132,7 @@ class DatabaseSeeder extends Seeder
             'url' => 'sysuser',
             'icon' => 'ni-single-02',
             'tabel' => 'users',
-            'layout' => 'master'
+            'layout' => 'master',
         ]);
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'system',
@@ -144,7 +143,7 @@ class DatabaseSeeder extends Seeder
             'icon' => 'ni-ui-04',
             'tabel' => 'sys_id',
             'layout' => 'master',
-            'js' => '1'
+            'js' => '1',
         ]);
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'system',
@@ -154,7 +153,7 @@ class DatabaseSeeder extends Seeder
             'url' => 'syscnt',
             'icon' => 'ni-ui-04',
             'tabel' => 'sys_counter',
-            'layout' => 'standr'
+            'layout' => 'standr',
         ]);
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'system',
@@ -164,7 +163,7 @@ class DatabaseSeeder extends Seeder
             'url' => 'sysapp',
             'icon' => 'ni-ui-04',
             'tabel' => 'sys_app',
-            'layout' => 'master'
+            'layout' => 'master',
         ]);
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'master',
@@ -174,7 +173,7 @@ class DatabaseSeeder extends Seeder
             'url' => 'msenum',
             'icon' => 'ni-ui-04',
             'tabel' => 'sys_enum',
-            'layout' => 'master'
+            'layout' => 'master',
         ]);
         DB::table('sys_dmenu')->insert([
             'gmenu' => 'report',
@@ -184,17 +183,17 @@ class DatabaseSeeder extends Seeder
             'url' => 'rsyslg',
             'icon' => 'ni-ui-04',
             'tabel' => '-',
-            'layout' => 'report'
+            'layout' => 'report',
         ]);
 
-        //insert tabel sys_auth        
+        // insert tabel sys_auth
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
             'gmenu' => 'blankx',
             'dmenu' => 'dashbr',
             'add' => '1',
             'edit' => '1',
-            'delete' => '1'
+            'delete' => '1',
         ]);
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
@@ -202,7 +201,7 @@ class DatabaseSeeder extends Seeder
             'dmenu' => 'usersx',
             'add' => '1',
             'edit' => '1',
-            'delete' => '1'
+            'delete' => '1',
         ]);
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
@@ -210,7 +209,7 @@ class DatabaseSeeder extends Seeder
             'dmenu' => 'rolesx',
             'add' => '1',
             'edit' => '1',
-            'delete' => '1'
+            'delete' => '1',
         ]);
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
@@ -218,7 +217,7 @@ class DatabaseSeeder extends Seeder
             'dmenu' => 'authxx',
             'add' => '1',
             'edit' => '1',
-            'delete' => '1'
+            'delete' => '1',
         ]);
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
@@ -226,7 +225,7 @@ class DatabaseSeeder extends Seeder
             'dmenu' => 'tablex',
             'add' => '1',
             'edit' => '1',
-            'delete' => '1'
+            'delete' => '1',
         ]);
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
@@ -234,7 +233,7 @@ class DatabaseSeeder extends Seeder
             'dmenu' => 'setupx',
             'add' => '1',
             'edit' => '1',
-            'delete' => '1'
+            'delete' => '1',
         ]);
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
@@ -242,7 +241,7 @@ class DatabaseSeeder extends Seeder
             'dmenu' => 'gmenux',
             'add' => '1',
             'edit' => '1',
-            'delete' => '1'
+            'delete' => '1',
         ]);
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
@@ -250,7 +249,7 @@ class DatabaseSeeder extends Seeder
             'dmenu' => 'dmenux',
             'add' => '1',
             'edit' => '1',
-            'delete' => '1'
+            'delete' => '1',
         ]);
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
@@ -258,7 +257,7 @@ class DatabaseSeeder extends Seeder
             'dmenu' => 'sysidx',
             'add' => '1',
             'edit' => '1',
-            'delete' => '1'
+            'delete' => '1',
         ]);
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
@@ -266,7 +265,7 @@ class DatabaseSeeder extends Seeder
             'dmenu' => 'syscnt',
             'add' => '0',
             'edit' => '1',
-            'delete' => '1'
+            'delete' => '1',
         ]);
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
@@ -274,7 +273,7 @@ class DatabaseSeeder extends Seeder
             'dmenu' => 'msenum',
             'add' => '1',
             'edit' => '1',
-            'delete' => '1'
+            'delete' => '1',
         ]);
         DB::table('sys_auth')->insert([
             'idroles' => 'admins',
@@ -282,252 +281,252 @@ class DatabaseSeeder extends Seeder
             'dmenu' => 'rsyslg',
             'add' => '1',
             'edit' => '0',
-            'delete' => '0'
+            'delete' => '0',
         ]);
 
-        //sys_enum
+        // sys_enum
         DB::table('sys_enum')->insert([
             'idenum' => 'isactive',
             'value' => '1',
-            'name' => 'Active'
+            'name' => 'Active',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'isactive',
             'value' => '0',
-            'name' => 'Not Active'
+            'name' => 'Not Active',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'status',
             'value' => '1',
-            'name' => 'Sukses'
+            'name' => 'Sukses',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'status',
             'value' => '0',
-            'name' => 'Gagal'
+            'name' => 'Gagal',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'questions',
             'value' => '1',
-            'name' => 'YA'
+            'name' => 'YA',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'questions',
             'value' => '0',
-            'name' => 'TIDAK'
+            'name' => 'TIDAK',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'layout',
             'value' => 'manual',
-            'name' => 'Manual'
+            'name' => 'Manual',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'layout',
             'value' => 'master',
-            'name' => 'Master'
+            'name' => 'Master',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'layout',
             'value' => 'system',
-            'name' => 'System'
+            'name' => 'System',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'layout',
             'value' => 'report',
-            'name' => 'Report'
+            'name' => 'Report',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'layout',
             'value' => 'transc',
-            'name' => 'Transaction'
+            'name' => 'Transaction',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'layout',
             'value' => 'standr',
-            'name' => 'Standard'
+            'name' => 'Standard',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'layout',
             'value' => 'sublnk',
-            'name' => 'Sub Link'
+            'name' => 'Sub Link',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'source',
             'value' => 'int',
-            'name' => 'Internal'
+            'name' => 'Internal',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'source',
             'value' => 'ext',
-            'name' => 'External'
+            'name' => 'External',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'source',
             'value' => 'th4',
-            'name' => 'Tahun 4 digit'
+            'name' => 'Tahun 4 digit',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'source',
             'value' => 'th2',
-            'name' => 'Tahun 2 Digit'
+            'name' => 'Tahun 2 Digit',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'source',
             'value' => 'bln',
-            'name' => 'Bulan'
+            'name' => 'Bulan',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'source',
             'value' => 'tgl',
-            'name' => 'Tanggal'
+            'name' => 'Tanggal',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'source',
             'value' => 'cnt',
-            'name' => 'Counter'
+            'name' => 'Counter',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'position',
             'value' => '0',
-            'name' => 'Standard'
+            'name' => 'Standard',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'position',
             'value' => '1',
-            'name' => 'Header'
+            'name' => 'Header',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'position',
             'value' => '2',
-            'name' => 'Detail'
+            'name' => 'Detail',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'position',
             'value' => '3',
-            'name' => 'Left'
+            'name' => 'Left',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'position',
             'value' => '4',
-            'name' => 'Right'
+            'name' => 'Right',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'char',
-            'name' => 'Char'
+            'name' => 'Char',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'string',
-            'name' => 'String'
+            'name' => 'String',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'email',
-            'name' => 'Email'
+            'name' => 'Email',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'enum',
-            'name' => 'Select Option'
+            'name' => 'Select Option',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'image',
-            'name' => 'Image'
+            'name' => 'Image',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'join',
-            'name' => 'Join'
+            'name' => 'Join',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'number',
-            'name' => 'Number'
+            'name' => 'Number',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'password',
-            'name' => 'Password'
+            'name' => 'Password',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'report',
-            'name' => 'Report'
+            'name' => 'Report',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'text',
-            'name' => 'Text'
+            'name' => 'Text',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'hidden',
-            'name' => 'Hidden'
+            'name' => 'Hidden',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'date',
-            'name' => 'Date'
+            'name' => 'Date',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'date2',
-            'name' => 'Date Between'
+            'name' => 'Date Between',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'file',
-            'name' => 'File Upload'
+            'name' => 'File Upload',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'search',
-            'name' => 'Modal Search'
+            'name' => 'Modal Search',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'currency',
-            'name' => 'Currency'
+            'name' => 'Currency',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'type',
             'value' => 'sublink',
-            'name' => 'Sub Link'
+            'name' => 'Sub Link',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'primary',
             'value' => '1',
-            'name' => 'YA'
+            'name' => 'YA',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'primary',
             'value' => '0',
-            'name' => 'TIDAK'
+            'name' => 'TIDAK',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'primary',
             'value' => '2',
-            'name' => 'UNIQUE'
+            'name' => 'UNIQUE',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'tahun',
             'value' => '2024',
-            'name' => '2024'
+            'name' => '2024',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'tahun',
             'value' => '2025',
-            'name' => '2025'
+            'name' => '2025',
         ]);
         DB::table('sys_enum')->insert([
             'idenum' => 'tahun',
             'value' => '2026',
-            'name' => '2026'
+            'name' => '2026',
         ]);
 
-        //insert tabel sys_app        
+        // insert tabel sys_app
         DB::table('sys_app')->insert([
             'appid' => 'msjframework',
             'appname' => 'MSJFramework',
@@ -538,10 +537,10 @@ class DatabaseSeeder extends Seeder
             'province' => 'JAWA TIMUR',
             'country' => 'INDONESIA',
             'telephone' => '+62-31-897 1301, 897 5555',
-            'fax' => '+62-31-897 6666'
+            'fax' => '+62-31-897 6666',
         ]);
 
-        //other seeder
+        // other seeder
         $this->call([
             tabel_users::class,
             tabel_tabel_menu::class,
@@ -562,6 +561,10 @@ class DatabaseSeeder extends Seeder
             tabel_mskategori_pemasok::class,
             menu_master_barang_jasa::class,
             menu_perencanaan_pembelian::class,
+            PurchaseReportGmenuSeeder::class,
+            PurchaseReportDmenuSeeder::class,
+            PurchaseReportAuthSeeder::class,
+            PurchaseReportTableSeeder::class,
         ]);
     }
 }
